@@ -7,7 +7,7 @@ GET http://{{host}}:{{port}}/api/ratings/avg
 
 ###
 
-GET http://{{host}}:{{port}}/api/ratings/average
+GET http://{{host}}:{{port}}/api/ratings/count
 
 ###
 
