@@ -43,17 +43,17 @@ Or, if you don't have GraalVM installed, you can run the native executable build
 
 You can then execute your native executable with: `./build/ratings-admin-1.0.0-SNAPSHOT-runner`
 
-If you want to learn more about building native executables, please consult https://quarkus.io/guides/gradle-tooling.
+# Kotlin Data classes
 
-## Related guides
+Kotlin data classes are a very convenient way of defining data carrier classes, making them a great match to define an entity class.
 
-- Kotlin ([guide](https://quarkus.io/guides/kotlin)): Write your services in Kotlin
-- RESTEasy JAX-RS ([guide](https://quarkus.io/guides/rest-json)): REST endpoint framework implementing JAX-RS and more
+But this type of class comes with some limitations: all fields needs to be initialized at construction time or be marked as nullable, and the generated constructor needs to have as parameters all the fields of the data class.
 
-## Provided examples
+MongoDB with Panache uses the PojoCodec, a MongoDB codec which mandates the presence of a parameterless constructor.
 
-### RESTEasy JAX-RS example
+Therefore, if you want to use a data class as an entity class, you need a way to make Kotlin generate an empty constructor. To do so, you need to provide default values for all the fields of your classes. The following sentence from the Kotlin documentation explains it:
 
-REST is easy peasy with this Hello World RESTEasy resource.
+The last option is to the use the no-arg compiler plugin. This plugin is configured with a list of annotations, and the end result is the generation of no-args constructor for each class annotated with them.
 
-[Related guide section...](https://quarkus.io/guides/getting-started#the-jax-rs-resources)
+For MongoDB with Panache, you could use the @MongoEntity annotation on your data class for this:
+

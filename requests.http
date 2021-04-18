@@ -1,0 +1,42 @@
+GET http://{{host}}:{{port}}/api/ratings
+Accept: application/json
+
+###
+
+GET http://{{host}}:{{port}}/api/ratings/avg
+
+###
+
+GET http://{{host}}:{{port}}/api/ratings/average
+
+###
+
+POST http://{{host}}:{{port}}/api/ratings
+Content-Type: application/json
+
+{ "rating": 0 }
+
+###
+
+POST http://{{host}}:{{port}}/api/ratings
+Content-Type: application/json
+
+{ "rating": 6 }
+
+###
+
+POST http://{{host}}:{{port}}/api/ratings
+Content-Type: application/json
+
+{ "rating": 3 }
+
+###
+PUT http://{{host}}:{{port}}/api/ratings/607c4195467d7d35ecfb033c
+Content-Type: application/json
+
+{ "rating": 4 }
+
+
+###
+DELETE http://{{host}}:{{port}}/api/ratings/607c4195467d7d35ecfb033c
+Content-Type: application/json
