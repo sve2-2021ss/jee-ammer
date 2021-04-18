@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 class RatingsResourceTest {
 
     @Test
-    fun testHelloEndpoint() {
+    fun testRatingsEndpoint() {
         given()
           .`when`().get("/ratings")
           .then()
