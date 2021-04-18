@@ -22,7 +22,6 @@ dependencies {
     implementation 'io.quarkus:quarkus-hibernate-validator'
     implementation 'io.quarkus:quarkus-kotlin'
     implementation 'io.quarkus:quarkus-kubernetes'
-    implementation 'io.quarkus:quarkus-container-image-jib'
     implementation 'io.quarkus:quarkus-resteasy'
     implementation 'io.quarkus:quarkus-mongodb-panache-kotlin'
     implementation 'io.opentracing.contrib:opentracing-mongo-common'
