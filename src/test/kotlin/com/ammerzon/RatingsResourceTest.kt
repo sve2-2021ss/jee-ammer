@@ -7,13 +7,4 @@ import org.junit.jupiter.api.Test
 
 @QuarkusTest
 class RatingsResourceTest {
-
-    @Test
-    fun testRatingsEndpoint() {
-        given()
-          .`when`().get("/ratings")
-          .then()
-             .statusCode(200)
-    }
-
 }

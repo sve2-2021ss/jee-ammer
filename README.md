@@ -61,7 +61,7 @@ Another option is the following command which requires the correct credentials t
 
 ### Kubernetes manifests
 
-### OpenTracing, metric and health
+### OpenTracing, metrics and health
 
 ### Kotlin support
 
