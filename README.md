@@ -1,59 +1,67 @@
-# Ratings Admin Service
+# Ratings Admin Microservice
 
-This project uses Quarkus, the Supersonic Subatomic Java Framework.
+First exercise for the subject 20_SVE2UE at FH OÖ Campus Hagenberg. The exercise is based on Quarkus and extends a custom version of the Istio sample application [bookinfo](https://github.com/istio/istio/tree/master/samples/bookinfo).
+> See: [MC523-bookinfo](https://github.com/ammerzon/MC523-bookinfo)
 
-If you want to learn more about Quarkus, please visit its website: https://quarkus.io/.
+## Preface
 
-## Running the application in dev mode
+* application: always refers to bookinfo which consists of multiple microservice
+* microservice: always refers to a single entity of the bookinfo application
 
-You can run your application in dev mode that enables live coding using:
-```shell script
+## 🚩 Goal
+The goal for this project is a simple microservice which offers a REST API to maintain ratings in a database. Additionally, the microservice has the following requirements:
+
+* use Kotlin as programming language
+* use Panache to write entities more efficient
+* support for OpenTracing, Metrics and Health
+* use of JPA validation for passed entities
+* serve an OpenAPI endpoint
+* automatically generate Kubernetes manifests
+
+The bookinfo application itself is broken into four separate microservices as the following images displays:
+
+* **productpage**: The ``productpage`` microservice calls the ``details`` and ``reviews`` microservices to populate the page.
+* **details**: The ``details`` microservice contains book information.
+* **reviews**: The ``reviews`` microservice contains book reviews. It also calls the ``ratings`` microservice.
+* **ratings**: The ``ratings`` microservice contains book ranking information that accompanies a book review.
+* **ratings-admin**: The ``ratings-admin`` microservice offers an REST API to maintain the ratings.
+
+![](.github/architecture.png)
+
+## ✨ Functionality
+
+The microservice has the functionality to add and maintain the ratings of a product. Therefore, it offers the following endpoints:
+
+| Methods | Routes           | Description                    |
+|---------|------------------|--------------------------------|
+| GET     | `/ratings`       | Get all ratings                |
+| GET     | `/ratings/{id}`  | Get rating by id               |
+| GET     | `/ratings/avg`   | Get the average of all ratings |
+| GET     | `/ratings/count` | Get the amount of ratings      |
+| POST    | `/ratings`       | Create a new rating            |
+| PUT     | `/ratings/{id}`  | Update a rating                |
+| DELETE  | `/ratings/{id}`  | Delete a rating                |
+
+## 🏗 Architecture 
+
+The architecture of the microservice can be seen in the following image:
+
+![](.github/cld.png)
+
+## 🚀 Get started
+
+You can follow the guide in the repository of the [bookinfo](https://github.com/ammerzon/MC523-bookinfo) application to deploy a native image in a local Kubernetes cluster.
+
+Another option is the following command which requires the correct credentials to your MongoDb in the `application.properties` file:
+```shell
 ./gradlew quarkusDev
 ```
 
-> **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at http://localhost:8080/q/dev/.
+## Features of Quarkus
 
-## Packaging and running the application
+### Kubernetes manifests
 
-The application can be packaged using:
-```shell script
-./gradlew build
-```
-It produces the `quarkus-run.jar` file in the `build/quarkus-app/` directory.
-Be aware that it’s not an _über-jar_ as the dependencies are copied into the `build/quarkus-app/lib/` directory.
+### OpenTracing, metric and health
 
-If you want to build an _über-jar_, execute the following command:
-```shell script
-./gradlew build -Dquarkus.package.type=uber-jar
-```
-
-The application is now runnable using `java -jar build/quarkus-app/quarkus-run.jar`.
-
-## Creating a native executable
-
-You can create a native executable using: 
-```shell script
-./gradlew build -Dquarkus.package.type=native
-```
-
-Or, if you don't have GraalVM installed, you can run the native executable build in a container using: 
-```shell script
-./gradlew build -Dquarkus.package.type=native -Dquarkus.native.container-build=true
-```
-
-You can then execute your native executable with: `./build/ratings-admin-1.0.0-SNAPSHOT-runner`
-
-# Kotlin Data classes
-
-Kotlin data classes are a very convenient way of defining data carrier classes, making them a great match to define an entity class.
-
-But this type of class comes with some limitations: all fields needs to be initialized at construction time or be marked as nullable, and the generated constructor needs to have as parameters all the fields of the data class.
-
-MongoDB with Panache uses the PojoCodec, a MongoDB codec which mandates the presence of a parameterless constructor.
-
-Therefore, if you want to use a data class as an entity class, you need a way to make Kotlin generate an empty constructor. To do so, you need to provide default values for all the fields of your classes. The following sentence from the Kotlin documentation explains it:
-
-The last option is to the use the no-arg compiler plugin. This plugin is configured with a list of annotations, and the end result is the generation of no-args constructor for each class annotated with them.
-
-For MongoDB with Panache, you could use the @MongoEntity annotation on your data class for this:
+### Kotlin support
 
